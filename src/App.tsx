@@ -1,26 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
+import { useState } from 'react';
+import friends from './friends.json';
 import './App.css';
+import { FriendCard, Wrapper } from './components';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [friendsList, setFriendsLst] = useState(friends);
+
+	const removeFriend = (id: number) => {
+		const newList = friendsList.filter(friend => friend.id !== id);
+		setFriendsLst(newList);
+	};
+
+	const InjectReactNodeChildComponent = (
+		<>
+			<div className=''>
+This is a JSX.Element being anchored onto a returned react node
+					<img src='https://dev-to-uploads.s3.amazonaws.com/uploads/articles/5agd45c2f1ctcwbdkb2f.gif'  />
+
+			</div>
+		</>
+	);
+
+	return (
+		<Wrapper childrenTwo={InjectReactNodeChildComponent}>
+			<h1 className='title'>TypeScript Friends List</h1>
+			{friendsList != null && friendsList.length > 0 ? (
+				friendsList.map(friend => {
+					return (
+						<FriendCard
+							removeFriend={removeFriend}
+							id={friend.id}
+							key={friend.id}
+							name={friend.name}
+							image={friend.image}
+							occupation={friend.occupation}
+							location={friend.location}
+						/>
+					);
+				})
+			) : (
+				<div>
+					<img src={"https://dev-to-uploads.s3.amazonaws.com/uploads/articles/5agd45c2f1ctcwbdkb2f.gif"} />
+				</div>
+			)}
+		</Wrapper>
+	);
 }
 
 export default App;

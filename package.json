@@ -18,6 +18,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "start:outputTracked": "yarn tsconfig:effective && yarn start",
+    "tsconfig:effective": "tsc --showConfig",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
